@@ -77,7 +77,11 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    lifeEvent.count++;
+                    lifeEventBox?.put(lifeEvent);
+                    fetchLifeEvents();
+                  },
                   icon: const Icon(Icons.plus_one),
                 ),
               ],
