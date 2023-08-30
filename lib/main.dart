@@ -57,6 +57,18 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
           return Text(lifeEvent.title);
         }),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return const AddLifeEventPage();
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
