@@ -59,14 +59,19 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(
+        onPressed: () async {
+          final newLifeEvent = await Navigator.of(context).push<LifeEvent>(
             MaterialPageRoute(
               builder: (context) {
                 return const AddLifeEventPage();
               },
             ),
           );
+          if (newLifeEvent != null) {
+            lifeEventBox?.put(newLifeEvent);
+            lifeEvents = lifeEventBox?.getAll() ?? [];
+            setState(() {});
+          }
         },
       ),
     );
@@ -87,7 +92,12 @@ class _AddLifeEventPageState extends State<AddLifeEventPage> {
       appBar: AppBar(
         title: const Text('ライフイベント追加'),
       ),
-      body: TextFormField(),
+      body: TextFormField(
+        onFieldSubmitted: (text) {
+          final lifeEvent = LifeEvent(title: text, count: 0);
+          Navigator.of(context).pop(lifeEvent);
+        },
+      ),
     );
   }
 }
