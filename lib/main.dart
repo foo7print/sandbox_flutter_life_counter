@@ -29,10 +29,12 @@ class LifeCounterPage extends StatefulWidget {
 class _LifeCounterPageState extends State<LifeCounterPage> {
   Store? store;
   Box<LifeEvent>? lifeEventBox;
+  List<LifeEvent> lifeEvents = [];
 
   Future<void> initialize() async {
     store = await openStore();
     lifeEventBox = store?.box<LifeEvent>();
+    lifeEvents = lifeEventBox?.getAll() ?? [];
     setState(() {});
   }
 
@@ -44,6 +46,17 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('人生カウンター'),
+      ),
+      body: ListView.builder(
+        itemCount: lifeEvents.length,
+        itemBuilder: ((context, index) {
+          final lifeEvent = lifeEvents[index];
+          return Text(lifeEvent.title);
+        }),
+      ),
+    );
   }
 }
