@@ -34,6 +34,10 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
   Future<void> initialize() async {
     store = await openStore();
     lifeEventBox = store?.box<LifeEvent>();
+    fetchLifeEvents();
+  }
+
+  void fetchLifeEvents() {
     lifeEvents = lifeEventBox?.getAll() ?? [];
     setState(() {});
   }
@@ -69,8 +73,7 @@ class _LifeCounterPageState extends State<LifeCounterPage> {
           );
           if (newLifeEvent != null) {
             lifeEventBox?.put(newLifeEvent);
-            lifeEvents = lifeEventBox?.getAll() ?? [];
-            setState(() {});
+            fetchLifeEvents();
           }
         },
       ),
