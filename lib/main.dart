@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'objectbox.g.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -24,6 +26,19 @@ class LifeCounterPage extends StatefulWidget {
 }
 
 class _LifeCounterPageState extends State<LifeCounterPage> {
+  Store? store;
+
+  Future<void> initialize() async {
+    store = await openStore();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold();
